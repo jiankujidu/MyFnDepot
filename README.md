@@ -10,15 +10,23 @@
 
 在飞牛NAS **应用中心 → 设置（或右上角）→ 添加第三方应用源**，填入下面地址：
 
+### 主地址
+
 ```
 https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
 ```
 
-国内访问不畅时可加镜像前缀（路径不变）：
+### 国内加速（实测可用）
+
+在前面套一层加速前缀，路径不变：
 
 ```
-https://ghfast.top/https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
+https://gh-proxy.com/https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
 ```
+
+> 已实测：`gh-proxy.com` 能正常拉取索引并完整下载 fpk（含 6.6MB 的包，校验一致）。
+> `ghfast.top` 实测不可用（502），别用。
+> jsDelivr（`cdn.jsdelivr.net/gh/...`）能取索引，但对单文件有 20MB 限制，**80MB 的视频下载器会下不动**，不建议整源走它。
 
 > 添加后若列表不刷新，重启应用中心或等待几分钟缓存过期。
 
