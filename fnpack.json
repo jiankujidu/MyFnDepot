@@ -36,8 +36,8 @@
           "packages": {
             "all": {
               "download_url": "fnlogpush/fnlogpush.fpk",
-              "sha256": "3ac02ce00551411c426caf000c4b85fb3fd1a3951f986fa8961af06a1eb4158e",
-              "size": 1001225
+              "sha256": "80ac6d29d5982dce7a43b799a3d159dce851cb350ff9a20bde1c24073e60ab89",
+              "size": 987706
             }
           },
           "updated_at": "2026-09-26"
@@ -72,8 +72,8 @@
           "packages": {
             "all": {
               "download_url": "usbrsync/usbrsync.fpk",
-              "sha256": "fa86898f4fd41798668cc3451ef16f50bed2feb82e8b11ed507248e2939c4354",
-              "size": 341729
+              "sha256": "95224837d689fa78772ef8b34901546997e990e89b825c91f55ac52430c7fdfe",
+              "size": 339714
             }
           }
         }
@@ -108,8 +108,8 @@
           "packages": {
             "all": {
               "download_url": "fnclearup/fnclearup.fpk",
-              "sha256": "f893398589c4aad5b12f401cdf0291d5bf442f589ec1bcc04fb33e15425fdbeb",
-              "size": 497901
+              "sha256": "e4c4d3904e8f3ba3e48c0759875d1d1f89c702f040935fa6149b242267db8e29",
+              "size": 494507
             }
           }
         }
@@ -143,8 +143,8 @@
           "packages": {
             "all": {
               "download_url": "fnm3u8/fnm3u8.fpk",
-              "sha256": "4552d6f8f1b77f0b3edf073c7d90510d86105edc3e5fa9a3473c69f47a56cc95",
-              "size": 378312
+              "sha256": "f680e49233fdd63a9fb3d9097a69fc0d6ac18790ed005bfa06ecbeb67dd0718e",
+              "size": 376726
             }
           }
         }
@@ -179,8 +179,8 @@
           "packages": {
             "all": {
               "download_url": "fnm3u8dl/fnm3u8dl.fpk",
-              "sha256": "37acd2ed8e92ae778ff3fbfe3a1c0046e1ad5e7befa2059d229127660f8865ba",
-              "size": 6661778
+              "sha256": "3bb5f3d55b2293fc9d3f6f407bddb69b69794a4078b83d093ef0d43e42facc2d",
+              "size": 6657475
             }
           }
         }
@@ -217,8 +217,8 @@
           "packages": {
             "all": {
               "download_url": "fnytdlp/fnytdlp.fpk",
-              "sha256": "e8fd8f6f9bbc56a42825ad621271121188ea6753ca72e5e5d23ab36acb5ca34b",
-              "size": 80362039
+              "sha256": "123ca6ead71336b79aa335babeebae7516ce632cb2a9d5aadafb336ca38c5fe1",
+              "size": 80176737
             }
           }
         }
@@ -253,8 +253,8 @@
           "packages": {
             "all": {
               "download_url": "fngetcookie/fngetcookie.fpk",
-              "sha256": "7440e696b3a41fa91ee850b1a4fff7f09c7aa92127137d4aea98fc80d5f17c6d",
-              "size": 289676
+              "sha256": "f4f7ef687bd00223793870772e9c2e57812ff555568917eb6e31cf197c76194f",
+              "size": 287715
             }
           }
         }
@@ -292,8 +292,8 @@
           "packages": {
             "all": {
               "download_url": "netwatch/netwatch.fpk",
-              "sha256": "d7d7650f3475839d9163fb6a1d57ae5818afaa7ba40051f78ac3044895058be6",
-              "size": 5322452
+              "sha256": "671e866edf1ba8969b09304f75d314d9c3805c959a34299300d62165499f731f",
+              "size": 5179333
             }
           }
         }

@@ -145,8 +145,16 @@ stat -c %s xxx.fpk
 
 ## 来源与致谢
 
-- 应用本体（fpk）版权归原作者 **Wyf841015（再见一零一二）** 所有，本仓库为个人整理镜像，仅替换了仓库维护信息与文档署名
+- 全部应用由原作者 **Wyf841015（再见一零一二）** 开发，功能代码版权归原作者所有
 - 上游仓库：[Wyf841015/FnDepot](https://github.com/Wyf841015/FnDepot)（MIT License）
+- 本仓库已替换的部分：索引与文档署名、`manifest` 的 maintainer/distributor、应用内页脚署名与「联系作者」入口（原 QQ 群号改为本仓库地址）
+- 未替换的部分：应用内赞助收款二维码图片，仍指向原作者
+
+## 改包须知
+
+`fpk` = `gzip( tar{ app.tgz, cmd/, config/, ICON.PNG, manifest, wizard/ } )`，`app.tgz` 又是 `gzip(tar{ ui/ })`。
+
+**manifest 里的 `checksum` 是 `md5(app.tgz)`**，改动 `app.tgz` 内任何文件后必须重算并写回，否则飞牛应用中心会校验失败、装不上。改完包记得同步更新 `fnpack.json` 里的 `sha256` 与 `size`。
 
 ## 维护者
 
