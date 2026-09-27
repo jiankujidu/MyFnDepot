@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>fn第三方应用商店 · 飞牛NAS应用商店</title>
+<meta name="description" content="飞牛NAS 应用源，包含日志监控、下载工具、系统清理、网络监控等应用。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8; --card:#fff; --bd:#e4e6eb; --tx:#1f2328; --tx2:#5a6470;
+  --pri:#1a73e8; --pri-d:#1558b0; --pri-l:#e8f1fe;
+  --ok:#1a7f37; --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
+  --shadow-h:0 8px 24px rgba(16,24,40,.12);
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--tx); line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--pri);text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ---------- header ---------- */
+header{background:linear-gradient(135deg,#1a73e8 0%,#0d47a1 100%);color:#fff;padding:38px 0 30px}
+.hd{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{width:58px;height:58px;border-radius:15px;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:30px;flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.25)}
+h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+.sub{font-size:14px;opacity:.85;margin-top:2px}
+.stats{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.stat b{display:block;font-size:21px;font-weight:700;line-height:1.2}
+.stat span{font-size:12px;opacity:.8}
+
+.srcbox{margin-top:22px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);
+  border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.srcbox code{flex:1;min-width:260px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;
+  word-break:break-all;opacity:.95}
+.btn{border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:.15s;white-space:nowrap}
+.btn-w{background:#fff;color:var(--pri-d)}
+.btn-w:hover{background:#f0f4ff}
+.btn-p{background:var(--pri);color:#fff}
+.btn-p:hover{background:var(--pri-d)}
+.btn-g{background:#fff;color:var(--tx);border:1px solid var(--bd)}
+.btn-g:hover{border-color:var(--pri);color:var(--pri)}
+
+/* ---------- toolbar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:rgba(245,246,248,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--bd);padding:14px 0}
+.bar-in{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:200px;position:relative}
+.search input{width:100%;padding:9px 14px 9px 36px;border:1px solid var(--bd);border-radius:9px;
+  font-size:14px;font-family:inherit;background:#fff;outline:0;transition:.15s}
+.search input:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-l)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.45}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:6px 14px;border-radius:20px;background:#fff;border:1px solid var(--bd);
+  font-size:13px;cursor:pointer;transition:.15s;user-select:none;color:var(--tx2)}
+.chip:hover{border-color:var(--pri);color:var(--pri)}
+.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+
+/* ---------- grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px;padding:22px 0 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;
+  cursor:pointer;transition:.18s;display:flex;flex-direction:column;position:relative}
+.card:hover{box-shadow:var(--shadow-h);border-color:#c9d6ea;transform:translateY(-2px)}
+.c-top{display:flex;gap:13px;align-items:flex-start}
+.c-icon{width:50px;height:50px;border-radius:12px;object-fit:contain;background:#f7f8fa;
+  border:1px solid #eef0f3;flex:0 0 auto;padding:3px}
+.c-name{font-size:16px;font-weight:650;line-height:1.35}
+.c-cat{font-size:11.5px;color:var(--tx2);margin-top:3px}
+.c-desc{font-size:13px;color:var(--tx2);margin:12px 0 14px;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.c-meta{display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;color:#7a8794;border-top:1px solid #f0f1f4;padding-top:11px}
+.ver{background:var(--pri-l);color:var(--pri-d);padding:2px 8px;border-radius:5px;
+  font-weight:600;font-size:11.5px}
+.empty{text-align:center;padding:70px 20px;color:var(--tx2)}
+.empty div:first-child{font-size:44px;margin-bottom:12px;opacity:.35}
+
+/* ---------- modal ---------- */
+.mask{position:fixed;inset:0;background:rgba(16,24,40,.5);z-index:100;display:none;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.mask.on{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:760px;width:100%;max-height:88vh;
+  overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.m-hd{padding:24px 26px 18px;border-bottom:1px solid var(--bd);display:flex;gap:16px;align-items:flex-start}
+.m-hd img{width:64px;height:64px;border-radius:14px;border:1px solid #eef0f3;padding:3px;flex:0 0 auto}
+.m-hd h2{font-size:20px;font-weight:700}
+.m-sub{font-size:13px;color:var(--tx2);margin-top:4px}
+.m-close{margin-left:auto;background:none;border:0;font-size:26px;color:#98a2ad;cursor:pointer;
+  line-height:1;padding:0 4px;font-family:inherit}
+.m-close:hover{color:var(--tx)}
+.m-body{padding:20px 26px 26px}
+.shots{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:18px}
+.shots img{height:290px;border-radius:10px;border:1px solid var(--bd);background:#f7f8fa;flex:0 0 auto}
+.sec-t{font-size:13px;font-weight:650;color:var(--tx2);margin:18px 0 8px;
+  text-transform:uppercase;letter-spacing:.6px}
+.desc{font-size:14px;color:#3f4855}
+.log{background:#f7f8fa;border:1px solid var(--bd);border-radius:10px;padding:14px 16px;
+  font-size:13px;color:#3f4855;white-space:pre-wrap;max-height:230px;overflow-y:auto;line-height:1.65}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:7px 18px;font-size:13px;color:var(--tx2)}
+.kv b{color:var(--tx);font-weight:600}
+.m-ft{display:flex;gap:10px;flex-wrap:wrap;padding-top:20px;margin-top:20px;border-top:1px solid var(--bd)}
+.sha{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:#8a94a0;
+  word-break:break-all;margin-top:10px}
+
+footer{border-top:1px solid var(--bd);padding:26px 0 40px;text-align:center;
+  font-size:13px;color:var(--tx2);background:#fff}
+footer a{color:var(--pri)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:#1f2328;color:#fff;padding:11px 22px;border-radius:9px;font-size:14px;
+  z-index:200;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:640px){
+  h1{font-size:21px} .stats{gap:18px} .grid{grid-template-columns:1fr}
+  .m-hd,.m-body{padding-left:18px;padding-right:18px} .shots img{height:230px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="hd">
+      <div class="logo">&#128230;</div>
+      <div>
+        <h1>fn第三方应用商店</h1>
+        <div class="sub">飞牛NAS（FnOS）第三方应用源 · 维护者 一起瞎折腾</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>8</b><span>个应用</span></div>
+      <div class="stat"><b>2</b><span>个分类</span></div>
+      <div class="stat"><b>90 MB</b><span>总大小</span></div>
+      <div class="stat"><b>2026-09-26</b><span>最近更新</span></div>
+    </div>
+    <div class="srcbox">
+      <code id="srcurl">https://raw.githubusercontent.com/jiankujidu/Store/main/fnpack.json</code>
+      <button class="btn btn-w" onclick="cp('https://raw.githubusercontent.com/jiankujidu/Store/main/fnpack.json')">复制源地址</button>
+      <button class="btn btn-w" onclick="cp('https://gh-proxy.com/https://raw.githubusercontent.com/jiankujidu/Store/main/fnpack.json')">复制加速地址</button>
+    </div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap bar-in">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+        <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="搜索应用名称或功能…" oninput="render()">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <div>&#128269;</div><div>没有找到匹配的应用</div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    fn第三方应用商店 · 由 <a href="https://github.com/jiankujidu/Store" target="_blank">一起瞎折腾</a> 维护<br>
+    应用本体版权归原作者所有（MIT），本页面为个人整理镜像 ·
+    <a href="https://github.com/jiankujidu/Store" target="_blank">GitHub 仓库</a> ·
+    <a href="https://jiankujidu.github.io" target="_blank">联系开发者</a>
+  </div>
+</footer>
+
+<div class="mask" id="mask" onclick="if(event.target===this)close()">
+  <div class="modal" id="modal"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {"apps": [{"id": "fngetcookie", "name": "Cookie 提取器", "desc": "通过代理方式自动捕获网站 Cookie 的工具。输入目标网站登录地址，在嵌入式浏览器中完成登录后自动提取 Cookie，支持复制 Netscape/JSON/Header 三种格式。", "cats": ["系统工具"], "icon": "fngetcookie/ICON_256.PNG", "previews": ["fngetcookie/Preview/screenshot_20260613_082444_com.trim.app.jpg", "fngetcookie/Preview/screenshot_20260613_082541_com.trim.app.jpg"], "version": "0.2.1", "size": 287732, "updated": "2026-09-11T09:27:52+08:00", "changelog": "v0.2.1\n安全加固与稳定性优化\n\n- 安全加固：SSRF 防内网/云元数据访问，CORS 同源校验，静态资源白名单防源码泄露\n- Cookie 增强：SameSite / Max-Age 完整解析，严格域匹配 + 路径前缀匹配\n- Cookie 持久化：应用重启后自动恢复，原子写入 + 损坏备份回退\n- 单条删除 + 值显隐：悬停删除指定 Cookie，敏感值默认隐藏\n- 会话测试：用已捕获 Cookie 重放请求验证登录态\n- 过期处理：Max-Age=0 / 已过期 Set-Cookie 自动删除\n- 稳定性：async 路由异常兜底，请求体上限，上游超时与连接清理", "file": "fngetcookie/fngetcookie.fpk", "sha": "9becef952bf6f496cf341be2c751ade063accb3d8392ebf61c9ae250a05ae853", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "USBRsyncCgi", "name": "USB自动同步", "desc": "USB存储设备自动同步工具，检测到USB设备插入后自动同步指定目录，支持单向和双向同步模式，实时显示同步进度", "cats": ["系统工具"], "icon": "usbrsync/ICON_256.PNG", "previews": ["usbrsync/Preview/USB Rsync.png"], "version": "0.4.2", "size": 339734, "updated": "2026-09-12T16:07:03+08:00", "changelog": "v0.4.2\n中断自动补同步 + 排除规则\n\n- 挂载中断自动补同步: USB 拔出/同步中断时自动记录待补任务, 重新插入后自动补同步(最多3次)\n- rsync 23 误判修复: 源/目标不可用不再误报同步完成\n- 任务级排除规则: 每任务可配置排除文件/目录", "file": "usbrsync/usbrsync.fpk", "sha": "1bf45921a4ad959b747d517fe4de346cbebae983e9484fc950db68c2f8058b7a", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "fnm3u8dl", "name": "m3u8DL 专业下载器", "desc": "专业视频下载工具，N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128/SAMPLE-AES 自动解密、多线程并发下载、断点续传、批量添加、直播录制、网页嗅探、yt-dlp 下载、Cookie 管理、格式选择、实时速度/ETA显示、493个TDD测试覆盖", "cats": ["影音娱乐"], "icon": "fnm3u8dl/ICON_256.PNG", "previews": ["fnm3u8dl/Preview/screenshot_20260526_192358_com.trim.app.jpg", "fnm3u8dl/Preview/screenshot_20260526_192414_com.trim.app.jpg"], "version": "0.9.0", "size": 6657470, "updated": "2026-09-21T14:37:01+08:00", "changelog": "v0.9.0\n对标 N_m3u8DL-RE 等开源项目优化 + 联系作者\n\n- save-pattern 命名模板: <Resolution>/<Bandwidth> 等占位符\n- custom-hls-method 加密覆盖: 手动指定 AES_128_ECB/NONE + KEY/IV\n- 批量任务导出/导入: /api/tasks/export + /api/tasks/import\n- 任务快照: JSON 保留每任务独立参数\n- 文件名兜底截断: 超 200 字符防 ENAMETOOLONG\n- 新增联系作者按钮: 弹窗显示 GitHub 仓库地址，支持一键复制\n- 已实现免改: ad-keyword 过滤 / ENDLIST 停录 / 限速\n\nv0.8.2\n10 项功能增强 + Code Review 5 项修复\n\n- O1: SSE 实时推送替代 3s 轮询\n- O2: per-task 实时速度 sparkline 折线图\n- O3: 智能 ETA — 30s 加权平均速度\n- O4: 断点续传 v2 — 跳过已下载 segment\n- O5: 多 part 并发下载 — worker pool\n- O6: aria2c 后端支持（检测到时自动启用）\n- O7: 批量操作面板 — 全选/反选/导出/重试/暂停/恢复/删除\n- O8: 拖拽排序 + 任务标签\n- O9: 内置视频播放器（HTTP Range 边下边播）\n- O10: M3U 列表导入 + 下载历史\n- Code Review 5 项修复\n- 修复: 页面底部版本号硬编码 0.8.0 → 0.8.2\n\nv0.8.1\n格式修复 + Code Review 重构\n\n- 修复: 输出格式始终为 .ts（muxFormat='mp4' 默认）\n- 修复: ffmpeg 只映射第一路流（-map 0 保留所有流）\n- 修复: 混流后 finalSize 仍读 .ts\n- 修复: 混流后 .ts 源文件残留\n- 修复: yt-dlp 硬编码 .mp4（动态使用 muxFormat）\n- 修复: ffmpeg/mkvmerge 无超时（加 timeout: 300000）\n- 测试: 159/159 pass\n\nv0.8.0\n- 视觉重构: 蓝紫色系主题 + 交互动效 + 任务卡状态色条 + 骨架屏\n- 新增: 网页嗅探 m3u8 + yt-dlp 下载模式 + Cookie 管理模块\n- 新增: yt-dlp 格式下拉框选择 + 显示网站名/18+标签/播放量等\n- 安全: Cookie 上传 1MB 限制 + 路径穿越校验\n- 优化: KPI 速度完成后归零 + 嗅探 fallback 去重\n- 测试: 493+ pass，inline onclick 全量覆盖", "file": "fnm3u8dl/fnm3u8dl.fpk", "sha": "61c696bdda87162871c876db7da3b07efb6f5fe4346f9b3f418d6b0974048485", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "fnm3u8", "name": "m3u8下载器", "desc": "支持多线程、多任务、断点续传的m3u8视频下载器，支持AES解密、批量下载、直播录制", "cats": ["影音娱乐"], "icon": "fnm3u8/ICON_256.PNG", "previews": ["fnm3u8/Preview/screenshot_20260525_000100_com.trim.app.jpg"], "version": "0.1.0", "size": 376765, "updated": "2026-06-20T23:24:53+08:00", "changelog": "v0.1.0\n- 初始版本：m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制\n- 状态筛选：全部/进行中/已完成/失败\n- 批量操作：全暂停/全开始/删除已完成\n- 浅色主题切换\n- 赞助功能\n- 安装/升级统计上报", "file": "fnm3u8/fnm3u8.fpk", "sha": "90f4c828c035d19ea40dc74f4860ded55e49ed6ad94d824904043ecf7180c665", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "fnlogpush", "name": "日志哨兵", "desc": "飞牛NAS日志监控与多渠道推送工具，支持Docker容器监控、WebSocket实时推送健康状态，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、魔法推送、MeoW等推送渠道", "cats": ["系统工具"], "icon": "fnlogpush/ICON_256.PNG", "previews": ["fnlogpush/Preview/screenshot_20260328_235846_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260328_235900_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260328_235926_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260328_235952_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260329_000017_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260329_000040_com.trim.app.jpg", "fnlogpush/Preview/screenshot_20260329_000102_com.trim.app.jpg"], "version": "1.5.3", "size": 987717, "updated": "2026-09-26", "changelog": "- 修复「Bark 推送配置保存不了」— pydantic 模型 BarkConfig 缺 device_key 字段，且 server_url 与前端/工厂期望的 server 字段名不符。pydantic 嵌套模型 extra 默认 ignore，model_validate + model_dump 会静默丢弃这两个字段，接口仍返回成功，导致配置保存后永不生效\n- 修复「PushPlus 主题配置保存不了」— PushPlusConfig 缺 topic 字段（同类问题，全项目扫描发现）\n- 新增 12 项渠道模型字段对齐测试，从机制上防止这一类「静默丢字段」问题复发\n- 同步 package-lock.json 版本号", "file": "fnlogpush/fnlogpush.fpk", "sha": "a0a370bc094a312a01e7e7fc8f508fc347f73ca1f031e91af64a237cc1232175", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "fnclearup", "name": "清理精灵", "desc": "智能扫描系统，精准识别已卸载应用、网盘挂载和 Docker 的残留目录及重复文件，一键安全清理 - Node.js 版", "cats": ["系统工具"], "icon": "fnclearup/ICON_256.PNG", "previews": ["fnclearup/Preview/screenshot_20260428_100127_com.trim.app.jpg", "fnclearup/Preview/screenshot_20260428_100137_com.trim.app.jpg"], "version": "0.11.0", "size": 494519, "updated": "2026-09-19T16:55:36+08:00", "changelog": "### v0.11.0\n- 安全修复：CSRF 跨站请求防护（POST 写操作需网关认证 X-Trim-Userid 或同源）\n- 安全修复：sysclean 裸目标 id 不再能直接清理，路径白名单支持 glob（/vol*/@appcenter）\n- 完善：所有扫描页面（空间/相似/异常/重名）统一添加目录浏览按钮\n- 新增：P2-3 去重双段预哈希（头+尾 4KB，替代单段头部）\n- 新增：P2-2 重名冲突检测（重名 Tab，跨目录同名分组）\n- 新增：P2-1 下载残留检测（.part/.crdownload/.download/.partial/.aria2）\n- 新增：P0-3 异常文件检测（空文件/无效软链/损坏媒体）\n- 新增：P0-2 相似图片/视频检测（dHash + ffmpeg）\n- 新增：P0-1 磁盘空间分析（空间 Tab，卷用量/目录下钻/类型分布/大文件）\n- 分类分组：系统清理 5 类分类浏览（对齐 MangoDisk）\n- 测试覆盖：124/124", "file": "fnclearup/fnclearup.fpk", "sha": "a27a861b647ecce2a9cb64b9e3d29fd40e35c48ff3191ca970b389ab8c9ec2d1", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "netwatch", "name": "网络监控", "desc": "实时网络流量监控工具，监控接口带宽、活跃连接、进程流量、协议分布等网络状态", "cats": ["系统工具"], "icon": "netwatch/ICON_256.PNG", "previews": ["netwatch/Preview/screenshot_20260827_211808_com.trim.app.ohar.jpg", "netwatch/Preview/screenshot_20260827_211822_com.trim.app.ohar.jpg", "netwatch/Preview/screenshot_20260827_211833_com.trim.app.ohar.jpg", "netwatch/Preview/screenshot_20260827_211837_com.trim.app.ohar.jpg", "netwatch/Preview/screenshot_20260827_211849_com.trim.app.ohar.jpg"], "version": "0.6.2", "size": 5179353, "updated": "2026-09-25T05:59:48", "changelog": "v0.6.2\n历史时间段查看 + 导出路径选择 + 今日/本周上下行\n\n- 今日/本周统计卡区分上行与下行（两行布局独立着色）\n- 修复今日/本周统计卡内容显示不全（固定4列布局覆盖媒体查询）\n- 流量历史按时间段查看：最近 1h/24h/7d/30d + 自定义起止，从持久化数据取数\n- 区间导出所选时间段数据，文件名带时间戳\n- 导出支持选择保存目录（/volX 用户卷或应用数据目录），保存后提示完整路径\n- 修复区间导出文件名含非法字符（时间戳改安全格式 YYYYMMDD-HHMM）", "file": "netwatch/netwatch.fpk", "sha": "78f0e6e5df32bc55ac35a1e642b8208bcf25f6c621078001d0281fddc0975e2a", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}, {"id": "fnytdlp", "name": "视频下载器", "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过 + 频道订阅自动检查新内容（增量下载 + 表格化 UI）", "cats": ["影音娱乐"], "icon": "fnytdlp/ICON_256.PNG", "previews": ["fnytdlp/Preview/screenshot_20260609_234454_com.trim.app.jpg", "fnytdlp/Preview/screenshot_20260609_234459_com.trim.app.jpg", "fnytdlp/Preview/screenshot_20260609_234507_com.trim.app.jpg", "fnytdlp/Preview/screenshot_20260609_234523_com.trim.app.jpg"], "version": "0.7.2", "size": 80176744, "updated": "2026-09-22", "changelog": "v0.7.2\n\n质量预设/容器格式点击修复 + 单链接质量下拉框 + FFmpeg 路径设置\n\n- 🐛 修复质量预设/容器格式按钮点击无反应: 补齐缺失CSS(基础/hover/选中态)+DOM0级绑定兜底\n- ⬇️ 单链接质量下拉框: 粘单链接解析后按实际分辨率/音频档生成下拉框, video-only自动拼最佳音频\n- 🎞️ FFmpeg 路径设置+自动检测: 设置→高级新增路径输入框+🔍检测按钮, 检测到自动保存, 转码时 yt-dlp 收到 --ffmpeg-location 调用\n- 🗑 移除首页视频/音频分类 tab: 按ext筛选对下载中任务(ext为空)无效, 两个分类已删除\n", "file": "fnytdlp/fnytdlp.fpk", "sha": "6cf53fb2ab884913c7ecd5c42beec07a82ace431dcc09ee78c06684374942321", "maintainer": "一起瞎折腾", "bug": "https://jiankujidu.github.io"}], "cats": ["系统工具", "影音娱乐"]};
+const SRC = {"name": "fn第三方应用商店", "author": "一起瞎折腾", "homepage": "https://github.com/jiankujidu/Store", "description": "飞牛NAS 应用源，包含日志监控、下载工具、系统清理、网络监控等应用。"};
+const BASE = 'https://raw.githubusercontent.com/jiankujidu/Store/main/';
+const PROXY = 'https://gh-proxy.com/' + BASE;
+let cur = '全部';
+
+function fmt(b){ return b>1048576 ? (b/1048576).toFixed(1)+' MB' : (b/1024).toFixed(0)+' KB'; }
+
+function cp(t){
+  navigator.clipboard.writeText(t).then(()=>toast('已复制：'+t),()=>toast('复制失败，请手动选中'));
+}
+function toast(m){
+  const e=document.getElementById('toast'); e.textContent=m; e.classList.add('on');
+  clearTimeout(e._t); e._t=setTimeout(()=>e.classList.remove('on'),2200);
+}
+
+document.getElementById('chips').innerHTML =
+  ['全部'].concat(DATA.cats).map(c=>
+    `<div class="chip${c===cur?' on':''}" onclick="pick('${c}')">${c}</div>`).join('');
+
+function pick(c){ cur=c;
+  document.querySelectorAll('.chip').forEach(e=>e.classList.toggle('on',e.textContent===c));
+  render();
+}
+
+function match(a){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const okc = cur==='全部' || a.cats.includes(cur);
+  const okq = !q || (a.name+a.desc+a.id).toLowerCase().includes(q);
+  return okc && okq;
+}
+
+function render(){
+  const list = DATA.apps.filter(match);
+  document.getElementById('empty').style.display = list.length ? 'none':'block';
+  document.getElementById('grid').innerHTML = list.map(a=>`
+    <div class="card" onclick="openApp('${a.id}')">
+      <div class="c-top">
+        <img class="c-icon" src="${a.icon}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+        <div>
+          <div class="c-name">${a.name}</div>
+          <div class="c-cat">${a.cats.join(' · ')}</div>
+        </div>
+      </div>
+      <div class="c-desc">${a.desc}</div>
+      <div class="c-meta">
+        <span class="ver">v${a.version}</span>
+        <span>${fmt(a.size)} · ${a.updated||''}</span>
+      </div>
+    </div>`).join('');
+}
+
+function openApp(id){
+  const a = DATA.apps.find(x=>x.id===id); if(!a) return;
+  const shots = a.previews.length
+    ? `<div class="shots">${a.previews.map(p=>`<img src="${p}" alt="" loading="lazy">`).join('')}</div>`
+    : '';
+  document.getElementById('modal').innerHTML = `
+    <div class="m-hd">
+      <img src="${a.icon}" alt="">
+      <div>
+        <h2>${a.name}</h2>
+        <div class="m-sub">${a.cats.join(' · ')} · 版本 v${a.version} · ${fmt(a.size)}</div>
+      </div>
+      <button class="m-close" onclick="close()">&times;</button>
+    </div>
+    <div class="m-body">
+      ${shots}
+      <div class="sec-t">应用简介</div>
+      <div class="desc">${a.desc}</div>
+      ${a.changelog?`<div class="sec-t">更新日志（v${a.version}）</div><div class="log">${a.changelog.replace(/</g,'&lt;')}</div>`:''}
+      <div class="sec-t">详细信息</div>
+      <div class="kv">
+        <b>包名</b><span>${a.id}</span>
+        <b>维护者</b><span>${a.maintainer}</span>
+        <b>更新日期</b><span>${a.updated||'-'}</span>
+        <b>文件大小</b><span>${fmt(a.size)}（${a.size} 字节）</span>
+      </div>
+      <div class="sha">SHA256: ${a.sha}</div>
+      <div class="m-ft">
+        <a class="btn btn-p" href="${a.file}" download>下载 fpk（本站）</a>
+        <a class="btn btn-g" href="${BASE+a.file}" target="_blank">GitHub 直链</a>
+        <a class="btn btn-g" href="${PROXY+a.file}" target="_blank">国内加速</a>
+        <button class="btn btn-g" onclick="cp('${BASE+a.file}')">复制链接</button>
+      </div>
+    </div>`;
+  document.getElementById('mask').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function close(){
+  document.getElementById('mask').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+render();
+</script>
+</body>
+</html>
