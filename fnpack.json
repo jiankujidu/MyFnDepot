@@ -351,7 +351,7 @@
         "appcenter/Preview/detail.png",
         "appcenter/Preview/home.png"
       ],
-      "run_as": "package",
+      "run_as": "root",
       "install_type": "",
       "is_docker": false,
       "maintainer": "一起瞎折腾",
@@ -412,6 +412,17 @@
               "download_url": "appcenter/fn-appcenter.fpk",
               "sha256": "4ca8070e79f9154e82629c12ec94ab6632da29f6ff4e3bbdf653bbf68145a95a",
               "size": 34071
+            }
+          }
+        },
+        "1.0.0": {
+          "changelog": "v1.0.0 重写：定位并根治「启动不了」的三个真实根因\n\n- 根因一（致命）：所有 shell 脚本是 CRLF 行尾，shebang 变成 `#!/bin/bash\\r`。\n  Linux 把解释器名当成 \"bash\\r\"，cmd/main 根本无法执行，fnOS 判定启动失败\n  —— 表现为\"按启动闪一下\"、桌面入口变灰、重启无效。打包脚本现强制统一为 LF。\n- 根因二：后端入口放在 ${TRIM_APPDEST}/cmd/appcenter/server.js。对照\n  飞牛自研 fnstore 与 6 个已验证可运行的第三方包，无一例外都是\n  `node ${TRIM_APPDEST}/ui/server.js`，fpk 里也没人把后端塞进 cmd/ 子目录。\n  现严格照此布局：server.js 移到 ui/，cmd/ 恢复扁平。\n- 根因三：ui/config 里是 allUsers=false + accessPerm=readonly，已验证包一律为\n  allUsers=true + accessPerm=editable，桌面入口因此被锁成不可打开。\n- 另：补齐 wizard/install（fnstore 有、我们没有），wizard/uninstall 改回中文字面量，\n  移除未被任何已验证包使用的 i18n/，cmd/ 下脚本统一补回 0755 执行位。\n- 前端与业务 API 未改动。",
+          "updated_at": "2026-09-27T19:10:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "d23ede6e298955d68f9af078faf90bcf1f11b5ba37fc4521ed8d1db8c8f22908",
+              "size": 33104
             }
           }
         }
