@@ -359,14 +359,14 @@
    "distributor_url": "https://github.com/jiankujidu/Store",
    "bug_report_url": "https://github.com/jiankujidu/Store/issues",
    "releases": {
-    "1.0.4": {
-     "changelog": "v1.0.4\n端口切换至 47945\n\n- 默认 TCP 端口从 48011 换到 47945\n- 保留 Unix socket 主通道 + TCP 端口占用自动让位\n- 网关走的是 socket，TCP 端口仅兜底；被占用也会自动向后探测",
-     "updated_at": "2026-09-27T17:00:00+08:00",
+    "1.0.5": {
+     "changelog": "v1.0.5\n网关反代路径纠错（关键）\n\n- 根因：Unix socket 曾放到 ${TRIM_APPDEST}/target/，而飞牛网关按官方范本\n  去 ${TRIM_APPDEST}/<app>.sock 取连接，路径对不上直接 Bad Gateway\n- socket 改回 ${TRIM_APPDEST}/fn-appcenter.sock，并同时绑定 target/ 变体\n- www-root 由 ${TRIM_APPDEST}/target/ui 改回 ${TRIM_APPDEST}/ui\n- 修复潜在风险：此前只有首个通道调 serve_forever，其余通道绑上却不服务\n",
+     "updated_at": "2026-09-27T17:20:00+08:00",
      "packages": {
       "all": {
        "download_url": "appcenter/fn-appcenter.fpk",
-       "sha256": "dc26f5ede2508a1f7ef66f9c91656bc9673cb080f2ddc24fa5f31fdf5532ce22",
-       "size": 32764
+       "sha256": "a30c7f57753f54c740cb0035b5ddbfcd278aa870eb1d58e7e515c31f61005138",
+       "size": 55025
       }
      }
     }
