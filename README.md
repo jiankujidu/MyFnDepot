@@ -10,6 +10,24 @@
 - **源作者 / 维护者**：一起瞎折腾
 - **主页**：https://github.com/jiankujidu/Store
 - **联系开发者**：https://jiankujidu.github.io
+- **网页版商店**：https://jiankujidu.github.io/Store/
+
+## 网页版商店
+
+不想在 NAS 上装，只想先看一眼或直接下载单个包，可以访问网页版：
+
+**https://jiankujidu.github.io/Store/**
+
+- 浏览全部应用（图标、简介、版本、大小、更新日期）
+- 搜索 + 分类筛选，点卡片看预览截图和更新日志
+- 直接下载 `.fpk`（本站 / GitHub 直链 / 国内加速三种通道）
+- 一键复制应用源地址
+
+页面由 `tools/build_store.py` 从 `fnpack.json` 自动生成 —— 增删应用或升版本后重跑一次即可：
+
+```bash
+python tools/build_store.py
+```
 
 ## 添加应用源
 
