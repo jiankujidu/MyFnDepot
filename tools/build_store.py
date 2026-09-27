@@ -5,8 +5,13 @@
 页面内图片/fpk 均使用仓库相对路径，因此部署到 GitHub Pages 后可直接显示与下载。
 """
 import json, os, sys, io
+from urllib.parse import quote
 
 sys.stdout.reconfigure(encoding='utf-8')
+
+def enc(p):
+    """仓库路径转 URL 安全路径：文件名可能含空格/中文（如 'USB Rsync.png'），必须编码"""
+    return quote(p, safe='/')
 
 REPO = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(REPO, 'index.html')
@@ -26,13 +31,13 @@ for app_id, a in d['apps'].items():
         'name': a['display_name'],
         'desc': a['desc'],
         'cats': a.get('categories') or ['其他'],
-        'icon': a['icon_url'],
-        'previews': a.get('preview_urls') or [],
+        'icon': enc(a['icon_url']),
+        'previews': [enc(x) for x in (a.get('preview_urls') or [])],
         'version': ver,
         'size': pkg['size'],
         'updated': rel.get('updated_at', ''),
         'changelog': rel.get('changelog', ''),
-        'file': pkg['download_url'],
+        'file': enc(pkg['download_url']),
         'sha': pkg['sha256'],
         'maintainer': a.get('maintainer', ''),
         'bug': a.get('bug_report_url', ''),
