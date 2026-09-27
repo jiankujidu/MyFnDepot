@@ -339,7 +339,7 @@
     },
     "fn-appcenter": {
       "display_name": "飞牛应用中心",
-      "desc": "飞牛NAS 第三方应用中心：自定义应用源、浏览搜索分类社区应用，一键下载 fpk 到 NAS 并调用系统命令行自动安装，支持安装进度、SHA256 校验与已安装检测。",
+      "desc": "第三方应用中心：自定义应用源、浏览搜索分类，一键下载 fpk 到 NAS 自动安装。",
       "platform": [
         "all"
       ],
@@ -390,6 +390,17 @@
               "download_url": "appcenter/fn-appcenter.fpk",
               "sha256": "cb0a111ad6b4cd0ecabdd5a3232e59b495fc8e6ac375c1900755e9174aa7e965",
               "size": 33802
+            }
+          }
+        },
+        "2.0.0": {
+          "changelog": "v2.0.0 彻底换运行时：后端由 Python 改为 Node.js\n\n- 根因：fnOS 上没有可用的 Python 运行时。应用源 10 个应用中无一提供\n  Python 依赖；已验证可运行的包（fnstore / fnclearup / fnm3u8 / fnytdlp /\n  USBRsyncCgi / fngetcookie）全部声明 install_dep_apps = nodejs_v24。\n  旧版后端只能去系统 PATH 里找 python3，探测全部落空后即 exit 1，\n  fnOS 因此判定「未运行」——桌面入口变灰、访问端口空白、重启亦无效。\n- 修复：manifest 补 install_dep_apps = nodejs_v24，后端重写为纯 Node.js\n  标准库实现（零 npm 依赖），cmd/main 改用 node 启动。\n- 后端行为与 UI 契约保持不变；fpk 解析逻辑与旧版逐字段比对一致。\n",
+          "updated_at": "2026-09-27T18:26:01+08:00",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "1965752706dd59df23ec0c14f89eb8cc1a1f5f2cb9df3f8fb5cbf7917772a522",
+              "size": 33671
             }
           }
         }
