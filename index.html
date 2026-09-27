@@ -152,6 +152,7 @@ footer a{color:var(--pri)}
       <input id="q" type="text" placeholder="搜索应用名称或功能…" oninput="render()">
     </div>
     <div class="chips" id="chips"></div>
+    <button class="btn btn-g" onclick="help()">&#10067; 怎么装到飞牛</button>
   </div>
 </div>
 
@@ -171,7 +172,7 @@ footer a{color:var(--pri)}
   </div>
 </footer>
 
-<div class="mask" id="mask" onclick="if(event.target===this)close()">
+<div class="mask" id="mask" onclick="if(event.target===this)closeModal()">
   <div class="modal" id="modal"></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -241,7 +242,7 @@ function openApp(id){
         <h2>${a.name}</h2>
         <div class="m-sub">${a.cats.join(' · ')} · 版本 v${a.version} · ${fmt(a.size)}</div>
       </div>
-      <button class="m-close" onclick="close()">&times;</button>
+      <button class="m-close" onclick="closeModal()">&times;</button>
     </div>
     <div class="m-body">
       ${shots}
@@ -266,11 +267,50 @@ function openApp(id){
   document.getElementById('mask').classList.add('on');
   document.body.style.overflow='hidden';
 }
-function close(){
+function closeModal(){
   document.getElementById('mask').classList.remove('on');
   document.body.style.overflow='';
 }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+function help(){
+  const box = u => `<div class="srcbox" style="background:#f7f8fa;border-color:var(--bd)">
+      <code style="color:var(--tx)">${u}</code>
+      <button class="btn btn-p" onclick="cp('${u}')">复制</button></div>`;
+  document.getElementById('modal').innerHTML = `
+    <div class="m-hd">
+      <div style="font-size:34px">&#128268;</div>
+      <div><h2>怎么装到飞牛NAS</h2>
+        <div class="m-sub">两种方式，任选其一</div></div>
+      <button class="m-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="m-body">
+      <div class="sec-t" style="margin-top:0">方式一 · 添加应用源（推荐，可一键更新）</div>
+      <div class="desc">飞牛NAS 打开 <b>应用中心 → 设置 → 添加第三方应用源</b>，粘贴下面的地址：</div>
+      <div style="margin:12px 0">${box(BASE+'fnpack.json')}</div>
+      <div class="desc">国内访问不畅时用加速地址：</div>
+      <div style="margin:12px 0">${box(PROXY+'fnpack.json')}</div>
+      <div class="desc" style="color:var(--tx2);font-size:13px">
+        添加后列表不刷新就重启应用中心或等几分钟缓存过期。</div>
+
+      <div class="sec-t">方式二 · 手动安装单个应用</div>
+      <div class="desc">不想加源，就在本页面点开任意应用 → <b>下载 fpk</b>，
+        然后到飞牛 <b>应用中心 → 手动安装</b> 上传该文件即可。</div>
+
+      <div class="sec-t">关于加速地址</div>
+      <div class="kv">
+        <b>raw 主地址</b><span>国外 / 网络通畅时直连，最稳</span>
+        <b>gh-proxy</b><span>实测可用，能完整下载大包（含 80MB 的视频下载器）</span>
+        <b>jsDelivr</b><span>单文件限 20MB，<b>不能</b>用于整源，大包会失败</span>
+      </div>
+      <div class="m-ft">
+        <a class="btn btn-p" href="${SRC.homepage}" target="_blank">打开 GitHub 仓库</a>
+        <a class="btn btn-g" href="${SRC.homepage}/issues" target="_blank">反馈问题</a>
+      </div>
+    </div>`;
+  document.getElementById('mask').classList.add('on');
+  document.body.style.overflow='hidden';
+}
 render();
 </script>
 </body>
