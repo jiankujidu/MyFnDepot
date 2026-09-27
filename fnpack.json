@@ -360,13 +360,24 @@
    "bug_report_url": "https://github.com/jiankujidu/Store/issues",
    "releases": {
     "1.0.0": {
-     "changelog": "v1.0.0\n首版发布\n\n- 应用中心界面：自定义应用源、浏览、搜索、分类筛选\n- 一键下载 fpk 到 NAS，内置 SHA256 校验收进\n- 调用系统命令行完成自动安装，实时进度与日志\n- 已安装检测与更新提示（对比已装包版本号）\n- 手动安装引导：如何把 fpk 传到 NAS 并安装",
-     "updated_at": "2026-09-27T12:55:35+08:00",
+     "changelog": "v1.0.1\n修复启动失败\n\n- 启动命令未传监听参数，导致进程启动即退出\n- 改为 Unix socket + TCP 双通道监听\n- 增加 Python 解释器与 setsid 的缺失兜底\n- manifest 显示名改用字面量",
+     "updated_at": "2026-09-27T13:16:26+08:00",
      "packages": {
       "all": {
        "download_url": "appcenter/fn-appcenter.fpk",
-       "sha256": "f070cad154d03ac35e0e89a1b1dbedc9fb3203e74efa5d7a8e7dfc6a9a89e618",
-       "size": 30880
+       "sha256": "1bd9298e4a947edd1c29ade5301bc6f0d3a7d2f334873a9a3c45d5d34cadfb1c",
+       "size": 31695
+      }
+     }
+    },
+    "1.0.1": {
+     "changelog": "v1.0.1\n修复启动失败\n\n- 启动命令未传监听参数，导致进程启动即退出\n- 改为 Unix socket + TCP 双通道监听\n- 增加 Python 解释器与 setsid 的缺失兜底\n- manifest 显示名改用字面量",
+     "updated_at": "2026-09-27T13:16:26+08:00",
+     "packages": {
+      "all": {
+       "download_url": "appcenter/fn-appcenter.fpk",
+       "sha256": "1bd9298e4a947edd1c29ade5301bc6f0d3a7d2f334873a9a3c45d5d34cadfb1c",
+       "size": 31695
       }
      }
     }
