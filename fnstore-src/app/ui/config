@@ -1,0 +1,14 @@
+{
+    ".url": {
+        "fnstore.Application": {
+            "title": "应用商店",
+            "icon": "images/icon_{0}.png",
+            "type": "iframe",
+            "url": "/app/fnstore",
+            "gatewaySocket": "fnstore.sock",
+            "gatewayPrefix": "/app/fnstore",
+            "allUsers": true,
+            "control": {"accessPerm": "editable"}
+        }
+    }
+}

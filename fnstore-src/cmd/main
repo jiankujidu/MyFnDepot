@@ -1,0 +1,97 @@
+#!/bin/bash
+### fnstore (应用商店) lifecycle script
+### - 常驻 Node HTTP 服务，飞牛桌面通过 /app/fnstore 反代访问
+### - exit code: status 运行中=0 / 已停止=3
+set -euo pipefail
+
+LOG_FILE="${TRIM_PKGVAR}/info.log"
+PID_FILE="${TRIM_PKGVAR}/app.pid"
+PORT="${wizard_app_port:-47890}"
+
+export PATH=/var/apps/nodejs_v24/target/bin:$PATH
+CMD="node ${TRIM_APPDEST}/ui/server.js"
+
+log_msg() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "${LOG_FILE}"
+}
+
+cleanup_port() {
+    if command -v lsof >/dev/null 2>&1; then
+        local pids
+        pids=$(lsof -ti :"${PORT}" 2>/dev/null || true)
+        if [ -n "${pids}" ]; then
+            log_msg "Killing port ${PORT} holders: ${pids}"
+            # shellcheck disable=SC2086
+            kill -TERM ${pids} 2>/dev/null || true
+            sleep 0.5
+            pids=$(lsof -ti :"${PORT}" 2>/dev/null || true)
+            [ -n "${pids}" ] && kill -KILL ${pids} 2>/dev/null || true
+        fi
+    else
+        pkill -TERM -f "node.*${TRIM_APPDEST}/ui/server\.js" 2>/dev/null || true
+        sleep 0.5
+        pkill -KILL -f "node.*${TRIM_APPDEST}/ui/server\.js" 2>/dev/null || true
+    fi
+    if [ -S "${TRIM_APPDEST}/target/fnstore.sock" ]; then
+        rm -f "${TRIM_APPDEST}/target/fnstore.sock" 2>/dev/null || true
+    fi
+}
+
+start_process() {
+    if status; then
+        log_msg "Already running"
+        return 0
+    fi
+    log_msg "Starting fnstore on port ${PORT} ..."
+    cleanup_port
+    sleep 0.3
+    PORT="${PORT}" TRIM_PKGVAR="${TRIM_PKGVAR}" bash -c "exec ${CMD}" >> "${LOG_FILE}" 2>&1 &
+    local pid=$!
+    printf "%s" "${pid}" > "${PID_FILE}"
+    log_msg "pid=${pid}"
+    return 0
+}
+
+stop_process() {
+    log_msg "Stopping process ..."
+    if [ -f "${PID_FILE}" ]; then
+        local pid
+        pid=$(head -n 1 "${PID_FILE}" | tr -d '[:space:]')
+        if [ -n "${pid}" ] && kill -0 "${pid}" 2>/dev/null; then
+            log_msg "send TERM to PID:${pid}"
+            kill -TERM "${pid}" 2>/dev/null || true
+            local count=0
+            while kill -0 "${pid}" 2>/dev/null && [ "${count}" -lt 10 ]; do
+                sleep 1; count=$((count + 1))
+                log_msg "waiting ... (${count}s)"
+            done
+            if kill -0 "${pid}" 2>/dev/null; then
+                log_msg "send KILL to PID:${pid}"
+                kill -KILL "${pid}" 2>/dev/null || true
+            fi
+        fi
+        rm -f "${PID_FILE}"
+    fi
+    cleanup_port
+    return 0
+}
+
+status() {
+    if [ -f "${PID_FILE}" ]; then
+        local pid
+        pid=$(head -n 1 "${PID_FILE}" | tr -d '[:space:]')
+        if [ -n "${pid}" ] && kill -0 "${pid}" 2>/dev/null; then
+            return 0
+        else
+            rm -f "${PID_FILE}"
+        fi
+    fi
+    return 1
+}
+
+case "${1:-}" in
+start)   start_process ;;
+stop)    stop_process ;;
+status)  if status; then exit 0; else exit 3; fi ;;
+*)       echo "Usage: $0 {start|stop|status}" >&2; exit 1 ;;
+esac

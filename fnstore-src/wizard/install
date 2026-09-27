@@ -1,0 +1,11 @@
+[
+  {
+    "stepTitle": "安装向导",
+    "items": [
+      {
+        "type": "tips",
+        "helpText": "应用商店需要 root 权限调用 appcenter-cli 安装应用，并需要网络访问应用源。安装第三方应用请自行确认来源可信。"
+      }
+    ]
+  }
+]

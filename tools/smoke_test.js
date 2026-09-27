@@ -26,9 +26,11 @@ const results = [];
 const check = (name, cond, extra = '') =>
   results.push(`${cond ? 'PASS' : 'FAIL'}  ${name}${extra ? '  → ' + extra : ''}`);
 
-// 1. 卡片渲染
+// 1. 卡片渲染（期望数量从页面内联数据取，避免硬编码）
+const _m = html.match(/const DATA = (\{[\s\S]*?\});\s*\nconst SRC/);
+const EXPECT = _m ? JSON.parse(_m[1]).apps.length : 0;
 const cards = qa('.card');
-check('应用卡片渲染', cards.length === 8, `${cards.length} 张`);
+check('应用卡片渲染', EXPECT > 0 && cards.length === EXPECT, `${cards.length}/${EXPECT} 张`);
 
 // 2. 卡片内容完整（名称/版本/大小）
 const first = cards[0];

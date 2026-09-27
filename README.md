@@ -65,6 +65,7 @@ https://gh-proxy.com/https://raw.githubusercontent.com/jiankujidu/Store/main/fnp
 | [视频下载器](fnytdlp/README.md) | v0.7.2 | 集成 yt-dlp (1872+ 站点)，AI 视频总结 / 缩略图代理 / 字幕提取 / 速度曲线 / 频道订阅 / 自适应架构 |
 | [Cookie 提取器](fngetcookie/README.md) | v0.2.1 | 通过代理方式自动捕获网站 Cookie，多格式导出，直连模式绕过 CSP 反代理站点 |
 | [网络监控](netwatch/README.md) | v0.6.2 | 实时网络流量监控，pktstat-BPF 引擎 + 进程级流量归因 |
+| [应用商店](fnstore-src/) | v0.1.0 | **本源自研**：装在 NAS 上的图形化应用商店，浏览/搜索/分类筛选应用，一键下载 fpk 并调用系统 `appcenter-cli` 自动安装，支持已安装识别、更新检测、多源管理与国内加速 |
 
 ## 安装说明
 
