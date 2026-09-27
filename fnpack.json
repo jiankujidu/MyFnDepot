@@ -381,6 +381,17 @@
               "size": 33384
             }
           }
+        },
+        "1.0.7": {
+          "changelog": "v1.0.7 根治「启动不了」（关键）\n\n- 根因：cmd/main 用了 setsid 启动服务。setsid 在必要时自身会 fork，\n  $! 记到的是已经退出的壳进程而非真实服务进程；fnOS 每轮\n  `cmd/main status` 都判定「未运行」，于是桌面入口变灰、界面进不去。\n- 修复：改为已验证包（fnclearup/fngetcookie/fnm3u8/fnstore）的标准写法\n  `bash -c \"exec $CMD\" &`，PID_FILE 记录的即为真实进程 PID。\n- 顺带把 fnOS 的非标准运行时路径 /var/apps/*/target/bin 并入 PATH 探测。\n",
+          "updated_at": "2026-09-27T17:54:14+08:00",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "cb0a111ad6b4cd0ecabdd5a3232e59b495fc8e6ac375c1900755e9174aa7e965",
+              "size": 33802
+            }
+          }
         }
       }
     }
