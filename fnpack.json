@@ -390,6 +390,17 @@
               "size": 41403
             }
           }
+        },
+        "1.1.1": {
+          "changelog": "v1.1.1 启动依赖容错加固\n\n- cmd/main 启动脚本容错定位 Node 运行时：优先 PATH 上的 node，再回退到 fnOS 依赖应用常见安装位置（/var/apps/nodejs_v24/target/bin 等）；全部找不到时给出可读中文报错，而不是静默闪退后页面空白。\n- 启动前自检（preflight）报错文案写清最可能原因：fpk 声明的依赖 nodejs_v24 未在飞牛应用中心安装成功。",
+          "updated_at": "2026-09-27",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "308bd4a54f257473ea39450b80f45d052d4cd5495018c178d4ea29ea0fb9e73b",
+              "size": 41643
+            }
+          }
         }
       }
     },
