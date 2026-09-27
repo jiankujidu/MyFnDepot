@@ -358,28 +358,6 @@
             }
           }
         },
-        "2.0.0": {
-          "changelog": "v2.0.0 彻底换运行时：后端由 Python 改为 Node.js\n\n- 根因：fnOS 上没有可用的 Python 运行时。应用源 10 个应用中无一提供\n  Python 依赖；已验证可运行的包（fnstore / fnclearup / fnm3u8 / fnytdlp /\n  USBRsyncCgi / fngetcookie）全部声明 install_dep_apps = nodejs_v24。\n  旧版后端只能去系统 PATH 里找 python3，探测全部落空后即 exit 1，\n  fnOS 因此判定「未运行」——桌面入口变灰、访问端口空白、重启亦无效。\n- 修复：manifest 补 install_dep_apps = nodejs_v24，后端重写为纯 Node.js\n  标准库实现（零 npm 依赖），cmd/main 改用 node 启动。\n- 后端行为与 UI 契约保持不变；fpk 解析逻辑与旧版逐字段比对一致。\n",
-          "updated_at": "2026-09-27T18:26:01+08:00",
-          "packages": {
-            "all": {
-              "download_url": "appcenter/fn-appcenter.fpk",
-              "sha256": "1965752706dd59df23ec0c14f89eb8cc1a1f5f2cb9df3f8fb5cbf7917772a522",
-              "size": 33671
-            }
-          }
-        },
-        "3.0.0": {
-          "changelog": "v3.0.0 运行时架构对齐飞牛官方 fnstore：主通道由 unix socket 改为 TCP 端口\n\n- 根因：我一直假设 fnOS 网关反代 unix socket，且端口由应用自行猜测。\n  对照飞牛自研应用 fnstore（官方自带、100% 可跑）后发现：\n    * fnstore 的 cmd/main 注明「飞牛桌面通过 /app/fnstore 反代访问」，\n      后端是 server.listen(PORT, \"0.0.0.0\")，网关反代的是 **TCP 端口**；\n    * 端口由 fnOS 通过 PORT 环境变量（wizard_app_port）下发，\n      而非应用猜测或写死。\n  我此前把 unix socket 当主通道、端口自己猜，网关因此找不到服务入口。\n- 修复：\n  * server.js 主通道改为 TCP，端口优先读 process.env.PORT（与 fnstore 一致）；\n    unix socket 降为附带通道，绑不上不再影响启动（消除 8 秒 FATAL 延迟）。\n  * cmd/main 逐项对齐 fnstore：set -euo pipefail / cleanup_port（lsof+pkill）/\n    PORT=\"${wizard_app_port:-47945}\" / bash -c \"exec ${CMD}\" &\n  * pkgvar 与 APPDEST 一样做路径归一化，端口回写 ${TRIM_PKGVAR}/port。\n- 未改动 UI 与业务 API，用法不变。\n",
-          "updated_at": "2026-09-27T18:44:56+08:00",
-          "packages": {
-            "all": {
-              "download_url": "appcenter/fn-appcenter.fpk",
-              "sha256": "4ca8070e79f9154e82629c12ec94ab6632da29f6ff4e3bbdf653bbf68145a95a",
-              "size": 34071
-            }
-          }
-        },
         "1.0.0": {
           "changelog": "v1.0.0 重写：定位并根治「启动不了」的三个真实根因\n\n- 根因一（致命）：所有 shell 脚本是 CRLF 行尾，shebang 变成 `#!/bin/bash\\r`。\n  Linux 把解释器名当成 \"bash\\r\"，cmd/main 根本无法执行，fnOS 判定启动失败\n  —— 表现为\"按启动闪一下\"、桌面入口变灰、重启无效。打包脚本现强制统一为 LF。\n- 根因二：后端入口放在 ${TRIM_APPDEST}/cmd/appcenter/server.js。对照\n  飞牛自研 fnstore 与 6 个已验证可运行的第三方包，无一例外都是\n  `node ${TRIM_APPDEST}/ui/server.js`，fpk 里也没人把后端塞进 cmd/ 子目录。\n  现严格照此布局：server.js 移到 ui/，cmd/ 恢复扁平。\n- 根因三：ui/config 里是 allUsers=false + accessPerm=readonly，已验证包一律为\n  allUsers=true + accessPerm=editable，桌面入口因此被锁成不可打开。\n- 另：补齐 wizard/install（fnstore 有、我们没有），wizard/uninstall 改回中文字面量，\n  移除未被任何已验证包使用的 i18n/，cmd/ 下脚本统一补回 0755 执行位。\n- 前端与业务 API 未改动。",
           "updated_at": "2026-09-27T19:10:00+08:00",
@@ -399,6 +377,17 @@
               "download_url": "appcenter/fn-appcenter.fpk",
               "sha256": "686bb76a9e8911e08713a32d2cde302f5682ca8e811c84abddf4311ed2375390",
               "size": 46005
+            }
+          }
+        },
+        "1.1.0": {
+          "changelog": "v1.1.0 安装链路健壮性大修：彻底解决「点了安装没反应 / 永久卡在下载中」。\n\n- 默认应用源由 raw.githubusercontent.com 改为 GitHub Pages（jiankujidu.github.io/Store），国内更稳、不再 0 应用。\n- 加速镜像只对 GitHub 系域名生效，GitHub Pages 不再被错误套 gh-proxy 前缀（避免 404）。\n- 下载支持停滞检测（25s 无新数据主动断开）+ Range 断点续传，弱网卡死也能自动续完。\n- 修复应用源索引 join 对绝对地址被叠加成双协议头的缺陷。\n- 离线端到端 35/35、fnOS 布局回归 13/13、真实浏览器安装链路 3/3 全部通过。",
+          "updated_at": "2026-09-27",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "ed0ea70bd2851e50a066b5c643b839ba7e960544723da7e9f4919913e8ba2074",
+              "size": 41403
             }
           }
         }
