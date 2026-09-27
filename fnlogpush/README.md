@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.5.2-green)](https://github.com/jiankujidu/MyFnDepot)
+[![Version](https://img.shields.io/badge/version-1.5.2-green)](https://jiankujidu.github.io)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -88,7 +88,7 @@
 ## 安装方式
 
 1. **在飞牛 NAS 应用中心搜索 "日志哨兵" 下载安装**（推荐）
-2. **手动安装**：下载 [fnlogpush.fpk](https://github.com/jiankujidu/MyFnDepot/releases) → 应用中心 → 手动安装
+2. **手动安装**：下载 [fnlogpush.fpk](https://jiankujidu.github.io/releases) → 应用中心 → 手动安装
 
 ## 开发者
 

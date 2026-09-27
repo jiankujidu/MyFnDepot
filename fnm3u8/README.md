@@ -66,7 +66,7 @@ m3u8下载器 FnM3u8
 
 ## 维护者
 
-- 作者：[jiankujidu](https://github.com/jiankujidu)
+- 作者：一起瞎折腾
 
 ---
 

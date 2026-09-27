@@ -1,10 +1,15 @@
-# MyFnDepot 飞牛NAS应用仓库
+# fn第三方应用商店
 
-> 我的私人飞牛NAS（FnOS）第三方应用源，收录自研和收集的飞牛NAS应用插件
+> 飞牛NAS（FnOS）第三方应用源 · 收录自研和收集的飞牛NAS应用插件
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
-[![Maintainer](https://img.shields.io/badge/maintainer-jiankujidu-green)](https://github.com/jiankujidu)
+[![Maintainer](https://img.shields.io/badge/maintainer-%E4%B8%80%E8%B5%B7%E7%9E%8E%E6%8A%98%E8%85%BE-green)](https://github.com/jiankujidu/Store)
+
+- **源名称**：fn第三方应用商店
+- **源作者 / 维护者**：一起瞎折腾
+- **主页**：https://github.com/jiankujidu/Store
+- **联系开发者**：https://jiankujidu.github.io
 
 ## 添加应用源
 
@@ -13,7 +18,7 @@
 ### 主地址
 
 ```
-https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
+https://raw.githubusercontent.com/jiankujidu/Store/main/fnpack.json
 ```
 
 ### 国内加速（实测可用）
@@ -21,7 +26,7 @@ https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
 在前面套一层加速前缀，路径不变：
 
 ```
-https://gh-proxy.com/https://raw.githubusercontent.com/jiankujidu/MyFnDepot/main/fnpack.json
+https://gh-proxy.com/https://raw.githubusercontent.com/jiankujidu/Store/main/fnpack.json
 ```
 
 > 已实测：`gh-proxy.com` 能正常拉取索引并完整下载 fpk（含 6.6MB 的包，校验一致）。
@@ -155,7 +160,7 @@ stat -c %s xxx.fpk
 
 - 全部应用由原作者 **Wyf841015（再见一零一二）** 开发，功能代码版权归原作者所有
 - 上游仓库：[Wyf841015/FnDepot](https://github.com/Wyf841015/FnDepot)（MIT License）
-- 本仓库已替换的部分：索引与文档署名、`manifest` 的 maintainer/distributor、应用内页脚署名与「联系作者」入口（原 QQ 群号改为本仓库地址）
+- 本仓库已替换的部分：索引与文档署名、`manifest` 的 maintainer/distributor、应用内页脚署名与「联系作者」入口（原 QQ 群号改为开发者联系页）
 - 未替换的部分：应用内赞助收款二维码图片，仍指向原作者
 
 ## 改包须知
@@ -166,8 +171,11 @@ stat -c %s xxx.fpk
 
 ## 维护者
 
-- GitHub：[@jiankujidu](https://github.com/jiankujidu)
-- 问题反馈：[MyFnDepot Issues](https://github.com/jiankujidu/MyFnDepot/issues)
+- 作者 / 维护者 / 发布者：一起瞎折腾
+- 主页：https://github.com/jiankujidu/Store
+- 联系开发者（问题反馈）：https://jiankujidu.github.io
+
+> 应用内「联系作者」按钮、以及索引里的 `bug_report_url` 均指向开发者联系页。
 
 ## 许可证
 

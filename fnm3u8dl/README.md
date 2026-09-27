@@ -117,7 +117,7 @@ fnOS 系统下的 m3u8/HLS/DASH/MSS 视频下载器，零依赖、纯 Node.js �
   - 弹窗显示当前路径 + 上级目录 + 子目录列表 + 选择当前目录
   - 选择后通过 `POST /api/config` 保存，触发 `registerPathPrefix` 提前注册
 - **页脚版权信息**（参照 fnytdlp）
-  - 页面底部居中显示 `fnm3u8dl v0.7.0 · © 2026 jiankujidu`
+  - 页面底部居中显示 `fnm3u8dl v0.7.0 · © 2026 一起瞎折腾`
   - server.js 新增 `VERSION` 常量，`/api/health` 暴露版本号给前端动态渲染
 - **时钟 / 速度 KPI 修复**
   - 时钟 `--:--:--` 不显示：`sparkline.js` 使用 ESM export，script 标签缺 `type="module"` 导致脚本不执行 → 修复

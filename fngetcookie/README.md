@@ -28,6 +28,6 @@
 
 ## 维护者
 
-- 作者：[jiankujidu](https://github.com/jiankujidu)
-- GitHub：[jiankujidu](https://github.com/jiankujidu)
-- Gitee：[jiankujidu](https://github.com/jiankujidu)
+- 作者：一起瞎折腾
+- 主页：https://github.com/jiankujidu/Store
+- 联系开发者：https://jiankujidu.github.io

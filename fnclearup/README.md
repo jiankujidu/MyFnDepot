@@ -422,7 +422,7 @@
 
 ## 维护者
 
-- 作者：[jiankujidu](https://github.com/jiankujidu)
+- 作者：一起瞎折腾
 
 ---
 
