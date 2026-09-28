@@ -445,6 +445,17 @@
               "size": 45519
             }
           }
+        },
+        "2.0.6": {
+          "changelog": "v2.0.6 根治「升级后界面没样式/卡在加载中」：旧版 style.css/main.js 文件名不变被飞牛桌面浏览器缓存顶掉，本次给前端资源加版本戳 (?v=2.0.6) 并将静态资源缓存策略改为 no-store，升级后必拉新文件。同时继承 v2.0.5 的事件委托按钮与装完自动重启。",
+          "updated_at": "2026-09-28",
+          "packages": {
+            "all": {
+              "download_url": "appcenter/fn-appcenter.fpk",
+              "sha256": "2c9acff3a09dbdeb11e02c822256c2c2b310b78322a8010fc1b4b27e79552f49",
+              "size": 45532
+            }
+          }
         }
       }
     },
